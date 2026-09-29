@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpeedyAI</title>
+<style>
+:root{--bg:#05070d;--panel:rgba(15,21,34,.78);--line:rgba(150,180,230,.18);--text:#f4f7fb;--muted:#94a0b4;--accent:#6ea8ff;--accent2:#8b7cff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:var(--text)}
+body{background:#05070d;overflow-x:hidden}
+body:before,body:after{
+  content:"";position:fixed;z-index:-2;pointer-events:none;
+  width:55vw;height:55vw;max-width:900px;max-height:900px;border-radius:48% 52% 65% 35%;
+  filter:blur(2px);
+}
+body:before{
+  left:-12vw;top:-18vw;
+  background:
+    radial-gradient(circle at 38% 35%,rgba(105,170,255,.82),transparent 26%),
+    radial-gradient(circle at 60% 62%,rgba(62,103,220,.52),transparent 34%),
+    linear-gradient(135deg,rgba(55,91,180,.55),rgba(7,11,24,.1));
+  transform:rotate(-24deg) skewY(-8deg);
+  box-shadow:inset 35px 35px 90px rgba(255,255,255,.08),inset -55px -55px 100px rgba(0,0,0,.42);
+}
+body:after{
+  right:-15vw;bottom:-22vw;
+  background:
+    radial-gradient(circle at 35% 35%,rgba(137,119,255,.72),transparent 25%),
+    radial-gradient(circle at 65% 55%,rgba(39,126,255,.5),transparent 35%),
+    linear-gradient(145deg,rgba(90,74,190,.48),rgba(6,9,20,.08));
+  transform:rotate(28deg) skewY(10deg);
+  box-shadow:inset 30px 30px 90px rgba(255,255,255,.06),inset -55px -55px 100px rgba(0,0,0,.45);
+}
+.bg-orb{position:fixed;z-index:-1;border-radius:50%;pointer-events:none;filter:blur(1px);opacity:.75}
+.orb1{width:280px;height:280px;left:20%;top:8%;background:radial-gradient(circle at 35% 30%,#b8d8ff,rgba(83,137,255,.38) 28%,transparent 70%);box-shadow:0 0 90px rgba(82,145,255,.2)}
+.orb2{width:360px;height:360px;right:10%;top:32%;background:radial-gradient(circle at 35% 35%,#d3caff,rgba(119,100,255,.28) 30%,transparent 70%);box-shadow:0 0 110px rgba(119,100,255,.18)}
+.glass-shape{position:fixed;z-index:-1;pointer-events:none;width:260px;height:90px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,.08),rgba(120,160,255,.03));backdrop-filter:blur(7px);box-shadow:0 25px 70px rgba(0,0,0,.22);transform:rotate(-28deg);right:24%;top:15%}
+.glass-shape.two{width:340px;right:5%;top:68%;transform:rotate(24deg)}
+header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--line);background:rgba(5,8,15,.62);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
+.logo{font-size:22px;font-weight:800}.logo span{color:var(--accent)}
+.status{font-size:13px;color:#7ee2a8;display:flex;align-items:center;gap:7px}.dot{width:8px;height:8px;border-radius:50%;background:#55d98b;box-shadow:0 0 12px #55d98b}
+main{width:min(980px,92%);margin:0 auto;padding:58px 0 32px}.hero{text-align:center;margin-bottom:30px}
+.badge{display:inline-block;padding:7px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px;background:rgba(255,255,255,.04)}
+h1{font-size:clamp(36px,6vw,64px);margin:18px 0 10px;letter-spacing:-2px;text-shadow:0 8px 35px rgba(100,150,255,.2)}
+.hero p{color:var(--muted);font-size:17px;margin:0}
+.chat{background:var(--panel);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 30px 100px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.06);backdrop-filter:blur(22px)}
+.messages{min-height:350px;max-height:55vh;overflow:auto;padding:24px}.message{max-width:78%;padding:14px 16px;border-radius:17px;line-height:1.5;margin-bottom:12px;font-size:15px}.ai{background:rgba(29,39,58,.82);border:1px solid rgba(150,180,230,.13)}.user{margin-left:auto;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
+.composer{padding:14px;border-top:1px solid var(--line);display:flex;gap:10px;background:rgba(7,11,19,.72)}input{flex:1;min-width:0;background:rgba(8,13,23,.75);color:var(--text);border:1px solid #303b50;border-radius:14px;padding:15px 16px;outline:none;font-size:15px}input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,168,255,.12)}
+button{border:0;border-radius:14px;padding:0 21px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-weight:800;cursor:pointer;box-shadow:0 8px 25px rgba(87,127,255,.24)}button:hover{filter:brightness(1.08)}
+footer{text-align:center;color:#667185;font-size:12px;padding:24px}
+@media(max-width:600px){header{padding:0 16px}.status{display:none}main{padding-top:38px}.messages{min-height:300px;padding:16px}.message{max-width:90%}.composer{padding:10px}button{padding:0 16px}.orb1{left:-25%;top:8%}.orb2{right:-30%;top:48%}}
+</style>
+</head>
+<body>
+<div class="bg-orb orb1"></div><div class="bg-orb orb2"></div>
+<div class="glass-shape"></div><div class="glass-shape two"></div>
+
+<header><div class="logo">⚡ <span>Speedy</span>AI</div><div class="status"><span class="dot"></span> Online</div></header>
+<main>
+<section class="hero"><div class="badge">AI-Assistent · Prototyp</div><h1>Was möchtest du wissen?</h1><p>Fragen, Technik, Lernen, Programmieren und vieles mehr.</p></section>
+<section class="chat"><div id="messages" class="messages"><div class="message ai">Hallo! Ich bin <strong>SpeedyAI</strong>. 👋<br>Die echte KI-Anbindung kommt als nächster Schritt.</div></div>
+<div class="composer"><input id="input" placeholder="Frag SpeedyAI …" autocomplete="off"><button id="send">Senden</button></div></section>
+</main>
+<footer>SpeedyAI · Prototyp</footer>
+<script>
+const input=document.getElementById("input"),messages=document.getElementById("messages");
+function send(){const text=input.value.trim();if(!text)return;const user=document.createElement("div");user.className="message user";user.textContent=text;messages.appendChild(user);const ai=document.createElement("div");ai.className="message ai";ai.textContent="Deine Anfrage ist angekommen. Die echte KI wird als nächster Schritt angeschlossen.";messages.appendChild(ai);input.value="";input.focus();messages.scrollTop=messages.scrollHeight}
+document.getElementById("send").addEventListener("click",send);input.addEventListener("keydown",e=>{if(e.key==="Enter")send()});
+</script>
+</body>
+</html>
