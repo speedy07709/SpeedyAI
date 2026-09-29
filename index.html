@@ -2,45 +2,144 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpeedyAI</title>
 <style>
-:root{--bg:#080a0f;--panel:#11151e;--line:#252c38;--text:#f5f7fb;--muted:#929baa;--accent:#6ea8ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#18243a 0,#080a0f 45%);color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100vh}
-header{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;font-size:22px;font-weight:800}.logo{color:var(--accent)}
-main{width:min(900px,92%);margin:0 auto;padding:70px 0 30px}
-.hero{text-align:center}.hero h1{font-size:clamp(38px,7vw,64px);margin:0 0 12px}.hero p{color:var(--muted);font-size:17px;margin:0 0 38px}
-.chat{background:rgba(17,21,30,.94);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 60px #0008;overflow:hidden}
-#messages{min-height:300px;max-height:52vh;overflow:auto;padding:22px;display:flex;flex-direction:column;gap:12px}
-.message{max-width:82%;padding:12px 15px;border-radius:15px;line-height:1.45;white-space:pre-wrap}.ai{align-self:flex-start;background:#202633}.user{align-self:flex-end;background:#2456a6}
-.composer{padding:14px;border-top:1px solid var(--line);display:flex;gap:10px}.composer input{flex:1;background:#0b0e14;color:#fff;border:1px solid #303746;border-radius:14px;padding:15px;outline:none;font-size:15px}.composer input:focus{border-color:var(--accent)}
-button{border:0;border-radius:14px;padding:0 20px;background:var(--accent);color:#07101f;font-weight:800;cursor:pointer}
-footer{text-align:center;color:#626b7b;font-size:13px;padding:28px}
+:root{
+  --bg:#080b12;
+  --panel:#101521;
+  --panel2:#151c2a;
+  --line:#273044;
+  --text:#f4f7fb;
+  --muted:#8d98aa;
+  --accent:#6ea8ff;
+  --accent2:#8b7cff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:var(--text)}
+body{
+  background:
+    radial-gradient(circle at 15% 10%,rgba(110,168,255,.16),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(139,124,255,.12),transparent 28%),
+    var(--bg);
+}
+header{
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  border-bottom:1px solid var(--line);
+  background:rgba(8,11,18,.78);
+  backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:10;
+}
+.logo{font-size:22px;font-weight:800;letter-spacing:.2px}
+.logo span{color:var(--accent)}
+.status{font-size:13px;color:#7ee2a8;display:flex;align-items:center;gap:7px}
+.dot{width:8px;height:8px;border-radius:50%;background:#55d98b;box-shadow:0 0 12px #55d98b}
+main{width:min(980px,92%);margin:0 auto;padding:58px 0 32px}
+.hero{text-align:center;margin-bottom:30px}
+.badge{
+  display:inline-block;padding:7px 12px;border:1px solid var(--line);
+  border-radius:999px;color:var(--muted);font-size:12px;background:rgba(255,255,255,.03)
+}
+h1{font-size:clamp(36px,6vw,64px);margin:18px 0 10px;letter-spacing:-2px}
+.hero p{color:var(--muted);font-size:17px;margin:0}
+.chat{
+  background:rgba(16,21,33,.86);
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.35);
+}
+.messages{min-height:350px;max-height:55vh;overflow:auto;padding:24px}
+.message{
+  max-width:78%;padding:14px 16px;border-radius:17px;
+  line-height:1.5;margin-bottom:12px;font-size:15px
+}
+.ai{background:#192131;border:1px solid #29354a}
+.user{margin-left:auto;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
+.composer{
+  padding:14px;border-top:1px solid var(--line);
+  display:flex;gap:10px;background:rgba(10,14,23,.9)
+}
+input{
+  flex:1;min-width:0;background:#0b1019;color:var(--text);
+  border:1px solid #303b50;border-radius:14px;padding:15px 16px;
+  outline:none;font-size:15px
+}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,168,255,.12)}
+button{
+  border:0;border-radius:14px;padding:0 21px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;font-weight:800;cursor:pointer
+}
+button:hover{filter:brightness(1.08)}
+footer{text-align:center;color:#667185;font-size:12px;padding:24px}
+@media(max-width:600px){
+  header{padding:0 16px}.status{display:none}
+  main{padding-top:38px}.messages{min-height:300px;padding:16px}
+  .message{max-width:90%}.composer{padding:10px}
+  button{padding:0 16px}
+}
 </style>
 </head>
 <body>
-<header><span class="logo">⚡ SpeedyAI</span></header>
+<header>
+  <div class="logo">⚡ <span>Speedy</span>AI</div>
+  <div class="status"><span class="dot"></span> Online</div>
+</header>
+
 <main>
-<section class="hero">
-<h1>Was möchtest du wissen?</h1>
-<p>Deine KI für Fragen, Technik, Lernen und vieles mehr.</p>
-</section>
-<section class="chat">
-<div id="messages"><div class="message ai">Hallo! Ich bin SpeedyAI. 👋<br>Die echte KI-Anbindung kommt als nächster Schritt.</div></div>
-<div class="composer">
-<input id="input" placeholder="Frag SpeedyAI …" autocomplete="off">
-<button id="send">Senden</button>
-</div>
-</section>
+  <section class="hero">
+    <div class="badge">AI-Assistent · Prototyp</div>
+    <h1>Was möchtest du wissen?</h1>
+    <p>Fragen, Technik, Lernen, Programmieren und vieles mehr.</p>
+  </section>
+
+  <section class="chat">
+    <div id="messages" class="messages">
+      <div class="message ai">
+        Hallo! Ich bin <strong>SpeedyAI</strong>. 👋<br>
+        Die echte KI-Anbindung kommt als nächster Schritt.
+      </div>
+    </div>
+
+    <div class="composer">
+      <input id="input" placeholder="Frag SpeedyAI …" autocomplete="off">
+      <button id="send">Senden</button>
+    </div>
+  </section>
 </main>
+
 <footer>SpeedyAI · Prototyp</footer>
+
 <script>
-const input=document.getElementById('input'), messages=document.getElementById('messages');
-function send(){const t=input.value.trim();if(!t)return;
-const u=document.createElement('div');u.className='message user';u.textContent=t;messages.appendChild(u);
-const a=document.createElement('div');a.className='message ai';a.textContent='Deine Anfrage ist angekommen. Die echte KI wird im nächsten Schritt angeschlossen.';messages.appendChild(a);
-input.value='';input.focus();messages.scrollTop=messages.scrollHeight}
-document.getElementById('send').onclick=send;input.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+const input=document.getElementById("input");
+const messages=document.getElementById("messages");
+
+function send(){
+  const text=input.value.trim();
+  if(!text)return;
+
+  const user=document.createElement("div");
+  user.className="message user";
+  user.textContent=text;
+  messages.appendChild(user);
+
+  const ai=document.createElement("div");
+  ai.className="message ai";
+  ai.textContent="Deine Anfrage ist angekommen. Die echte KI wird als nächster Schritt angeschlossen.";
+  messages.appendChild(ai);
+
+  input.value="";
+  messages.scrollTop=messages.scrollHeight;
+  input.focus();
+}
+
+document.getElementById("send").addEventListener("click",send);
+input.addEventListener("keydown",e=>{if(e.key==="Enter")send()});
 </script>
 </body>
 </html>
