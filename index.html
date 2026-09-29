@@ -1,145 +1,73 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8">          
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpeedyAI</title>
 <style>
-:root{
-  --bg:#080b12;
-  --panel:#101521;
-  --panel2:#151c2a;
-  --line:#273044;
-  --text:#f4f7fb;
-  --muted:#8d98aa;
-  --accent:#6ea8ff;
-  --accent2:#8b7cff;
+:root{--text:#f7f9ff;--muted:#aab4c8;--line:rgba(180,205,255,.22);--accent:#5ea7ff;--accent2:#8b6cff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:var(--text)}
+body{overflow-x:hidden;background:#050813}
+body:before{
+content:"";position:fixed;inset:-15%;z-index:-5;
+background:
+radial-gradient(ellipse 55% 35% at 20% 20%,rgba(55,139,255,.55),transparent 60%),
+radial-gradient(ellipse 45% 40% at 82% 28%,rgba(123,82,255,.48),transparent 62%),
+radial-gradient(ellipse 60% 45% at 45% 90%,rgba(22,103,255,.34),transparent 65%),
+#050813;
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:var(--text)}
-body{
-  background:
-    radial-gradient(circle at 15% 10%,rgba(110,168,255,.16),transparent 30%),
-    radial-gradient(circle at 85% 15%,rgba(139,124,255,.12),transparent 28%),
-    var(--bg);
+.wave{
+position:fixed;z-index:-4;pointer-events:none;
+border-radius:55% 45% 65% 35%;
+transform:rotate(-18deg);
+background:linear-gradient(135deg,rgba(255,255,255,.24),rgba(92,161,255,.16) 30%,rgba(71,77,210,.08) 62%,rgba(0,0,0,.12));
+border:1px solid rgba(220,235,255,.28);
+box-shadow:
+inset 25px 20px 55px rgba(255,255,255,.16),
+inset -35px -30px 70px rgba(0,0,0,.35),
+0 30px 100px rgba(42,113,255,.22);
+backdrop-filter:blur(2px);
 }
-header{
-  height:68px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 28px;
-  border-bottom:1px solid var(--line);
-  background:rgba(8,11,18,.78);
-  backdrop-filter:blur(14px);
-  position:sticky;top:0;z-index:10;
+.w1{width:900px;height:360px;left:-280px;top:60px;transform:rotate(-20deg) skewX(-8deg)}
+.w2{width:850px;height:330px;right:-250px;top:250px;transform:rotate(18deg) skewX(8deg);background:linear-gradient(135deg,rgba(139,110,255,.15),rgba(78,157,255,.18),rgba(255,255,255,.09))}
+.w3{width:1050px;height:390px;left:8%;bottom:-240px;transform:rotate(-8deg);background:linear-gradient(120deg,rgba(255,255,255,.13),rgba(80,130,255,.14),rgba(117,75,255,.15))}
+.glow{position:fixed;z-index:-3;border-radius:50%;pointer-events:none;filter:blur(5px)}
+.g1{width:420px;height:420px;left:13%;top:2%;background:radial-gradient(circle,rgba(86,170,255,.3),transparent 68%)}
+.g2{width:500px;height:500px;right:5%;bottom:0;background:radial-gradient(circle,rgba(129,95,255,.25),transparent 68%)}
+.grid{
+position:fixed;z-index:-2;inset:0;pointer-events:none;opacity:.08;
+background-image:linear-gradient(rgba(255,255,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.18) 1px,transparent 1px);
+background-size:80px 80px;
+mask-image:linear-gradient(to bottom,transparent,black 30%,black 70%,transparent);
 }
-.logo{font-size:22px;font-weight:800;letter-spacing:.2px}
-.logo span{color:var(--accent)}
-.status{font-size:13px;color:#7ee2a8;display:flex;align-items:center;gap:7px}
-.dot{width:8px;height:8px;border-radius:50%;background:#55d98b;box-shadow:0 0 12px #55d98b}
-main{width:min(980px,92%);margin:0 auto;padding:58px 0 32px}
-.hero{text-align:center;margin-bottom:30px}
-.badge{
-  display:inline-block;padding:7px 12px;border:1px solid var(--line);
-  border-radius:999px;color:var(--muted);font-size:12px;background:rgba(255,255,255,.03)
-}
-h1{font-size:clamp(36px,6vw,64px);margin:18px 0 10px;letter-spacing:-2px}
+header{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--line);background:rgba(4,7,15,.58);backdrop-filter:blur(18px);position:sticky;top:0;z-index:10}
+.logo{font-size:22px;font-weight:800}.logo span{color:#70b0ff}
+.status{font-size:13px;color:#80e6aa;display:flex;gap:7px;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#55df8d;box-shadow:0 0 15px #55df8d}
+main{width:min(980px,92%);margin:auto;padding:58px 0 32px}.hero{text-align:center;margin-bottom:30px}
+.badge{display:inline-block;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);color:var(--muted);font-size:12px;box-shadow:0 10px 35px rgba(0,0,0,.18)}
+h1{font-size:clamp(36px,6vw,64px);margin:18px 0 10px;letter-spacing:-2px;text-shadow:0 8px 35px rgba(82,151,255,.35)}
 .hero p{color:var(--muted);font-size:17px;margin:0}
-.chat{
-  background:rgba(16,21,33,.86);
-  border:1px solid var(--line);
-  border-radius:24px;
-  overflow:hidden;
-  box-shadow:0 24px 80px rgba(0,0,0,.35);
-}
-.messages{min-height:350px;max-height:55vh;overflow:auto;padding:24px}
-.message{
-  max-width:78%;padding:14px 16px;border-radius:17px;
-  line-height:1.5;margin-bottom:12px;font-size:15px
-}
-.ai{background:#192131;border:1px solid #29354a}
-.user{margin-left:auto;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
-.composer{
-  padding:14px;border-top:1px solid var(--line);
-  display:flex;gap:10px;background:rgba(10,14,23,.9)
-}
-input{
-  flex:1;min-width:0;background:#0b1019;color:var(--text);
-  border:1px solid #303b50;border-radius:14px;padding:15px 16px;
-  outline:none;font-size:15px
-}
-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(110,168,255,.12)}
-button{
-  border:0;border-radius:14px;padding:0 21px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:white;font-weight:800;cursor:pointer
-}
-button:hover{filter:brightness(1.08)}
-footer{text-align:center;color:#667185;font-size:12px;padding:24px}
-@media(max-width:600px){
-  header{padding:0 16px}.status{display:none}
-  main{padding-top:38px}.messages{min-height:300px;padding:16px}
-  .message{max-width:90%}.composer{padding:10px}
-  button{padding:0 16px}
-}
+.chat{background:rgba(12,18,31,.72);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 35px 110px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.08);backdrop-filter:blur(24px)}
+.messages{min-height:350px;max-height:55vh;overflow:auto;padding:24px}.message{max-width:78%;padding:14px 16px;border-radius:17px;line-height:1.5;margin-bottom:12px;font-size:15px}.ai{background:rgba(32,44,67,.8);border:1px solid rgba(170,200,255,.14)}.user{margin-left:auto;background:linear-gradient(135deg,#5daaff,#806cff);color:white}
+.composer{padding:14px;border-top:1px solid var(--line);display:flex;gap:10px;background:rgba(5,9,17,.7)}input{flex:1;min-width:0;background:rgba(6,11,20,.8);color:var(--text);border:1px solid #33415b;border-radius:14px;padding:15px 16px;outline:none;font-size:15px}input:focus{border-color:#6caaff;box-shadow:0 0 0 3px rgba(92,166,255,.13)}
+button{border:0;border-radius:14px;padding:0 21px;background:linear-gradient(135deg,#58aaff,#806cff);color:white;font-weight:800;cursor:pointer;box-shadow:0 8px 28px rgba(77,126,255,.28)}
+footer{text-align:center;color:#728098;font-size:12px;padding:24px}
+@media(max-width:600px){header{padding:0 16px}.status{display:none}main{padding-top:38px}.messages{min-height:300px;padding:16px}.message{max-width:90%}.composer{padding:10px}button{padding:0 16px}.w1{left:-400px}.w2{right:-400px}.w3{left:-100px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">⚡ <span>Speedy</span>AI</div>
-  <div class="status"><span class="dot"></span> Online</div>
-</header>
-
+<div class="wave w1"></div><div class="wave w2"></div><div class="wave w3"></div>
+<div class="glow g1"></div><div class="glow g2"></div><div class="grid"></div>
+<header><div class="logo">⚡ <span>Speedy</span>AI</div><div class="status"><span class="dot"></span> Online</div></header>
 <main>
-  <section class="hero">
-    <div class="badge">AI-Assistent · Prototyp</div>
-    <h1>Was möchtest du wissen?</h1>
-    <p>Fragen, Technik, Lernen, Programmieren und vieles mehr.</p>
-  </section>
-
-  <section class="chat">
-    <div id="messages" class="messages">
-      <div class="message ai">
-        Hallo! Ich bin <strong>SpeedyAI</strong>. 👋<br>
-        Die echte KI-Anbindung kommt als nächster Schritt.
-      </div>
-    </div>
-
-    <div class="composer">
-      <input id="input" placeholder="Frag SpeedyAI …" autocomplete="off">
-      <button id="send">Senden</button>
-    </div>
-  </section>
-</main>
-
-<footer>SpeedyAI · Prototyp</footer>
-
+<section class="hero"><div class="badge">AI-Assistent · Prototyp</div><h1>Was möchtest du wissen?</h1><p>Fragen, Technik, Lernen, Programmieren und vieles mehr.</p></section>
+<section class="chat"><div id="messages" class="messages"><div class="message ai">Hallo! Ich bin <strong>SpeedyAI</strong>. 👋<br>Die echte KI-Anbindung kommt als nächster Schritt.</div></div>
+<div class="composer"><input id="input" placeholder="Frag SpeedyAI …" autocomplete="off"><button id="send">Senden</button></div></section>
+</main><footer>SpeedyAI · Prototyp</footer>
 <script>
-const input=document.getElementById("input");
-const messages=document.getElementById("messages");
-
-function send(){
-  const text=input.value.trim();
-  if(!text)return;
-
-  const user=document.createElement("div");
-  user.className="message user";
-  user.textContent=text;
-  messages.appendChild(user);
-
-  const ai=document.createElement("div");
-  ai.className="message ai";
-  ai.textContent="Deine Anfrage ist angekommen. Die echte KI wird als nächster Schritt angeschlossen.";
-  messages.appendChild(ai);
-
-  input.value="";
-  messages.scrollTop=messages.scrollHeight;
-  input.focus();
-}
-
-document.getElementById("send").addEventListener("click",send);
-input.addEventListener("keydown",e=>{if(e.key==="Enter")send()});
+const input=document.getElementById("input"),messages=document.getElementById("messages");
+function send(){const t=input.value.trim();if(!t)return;let u=document.createElement("div");u.className="message user";u.textContent=t;messages.appendChild(u);let a=document.createElement("div");a.className="message ai";a.textContent="Deine Anfrage ist angekommen. Die echte KI wird als nächster Schritt angeschlossen.";messages.appendChild(a);input.value="";input.focus();messages.scrollTop=messages.scrollHeight}
+document.getElementById("send").onclick=send;input.onkeydown=e=>{if(e.key==="Enter")send()}
 </script>
 </body>
 </html>
